@@ -39,5 +39,9 @@ public abstract class Shape {
 	public void Select() {
 		flag = true;	
 	}
+
+	public void unSelect() {
+		flag = false;
+	}
     
 }

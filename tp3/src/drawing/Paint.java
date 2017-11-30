@@ -27,6 +27,7 @@ public class Paint extends Application {
     
     private ClearCommand clear;
     private CloneCommand clo;
+    private GroupCommand group;
 
     public static void main(String[] args) {
         launch(Paint.class, args);
@@ -48,6 +49,7 @@ public class Paint extends Application {
         
         clear = new ClearCommand(drawing);
         clo = new CloneCommand(drawing);
+        group = new GroupCommand(drawing);
         
         middleBox.getChildren().add(drawing);
         VBox.setVgrow(drawing, Priority.ALWAYS);
@@ -79,7 +81,7 @@ public class Paint extends Application {
         rectangleButton.addEventHandler(ActionEvent.ACTION, new RectangleButtonHandler(drawing));
 
         groupButton = new ToggleButton("Group");
-        groupButton.addEventHandler(ActionEvent.ACTION, new GroupButtonHandler(drawing));
+        groupButton.addEventHandler(ActionEvent.ACTION, new GroupButtonHandler(group,drawing));
 
         ungroupButton = new Button("Ungroup");
         ungroupButton.addEventHandler(ActionEvent.ACTION, new UngroupButtonHandler(drawing));

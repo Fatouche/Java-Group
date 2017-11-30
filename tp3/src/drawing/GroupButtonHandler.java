@@ -10,10 +10,11 @@ import javafx.scene.input.MouseEvent;
 public class GroupButtonHandler implements EventHandler<Event> {
 
     private Drawing drawing;
-    private Group group;
+    private Command group;
 
-    public GroupButtonHandler(Drawing drawing) {
+    public GroupButtonHandler(Command g,Drawing drawing) {
         this.drawing = drawing;
+        this.group = g;
     }
 
     @Override
@@ -21,14 +22,10 @@ public class GroupButtonHandler implements EventHandler<Event> {
 
         if (event instanceof ActionEvent) {
             if (event.getSource() instanceof ToggleButton && ((ToggleButton) event.getSource()).isSelected()) {
-                group = new Group();
                 drawing.addEventFilter(MouseEvent.ANY, this);
             } else {
                 drawing.removeEventFilter(MouseEvent.ANY, this);
-                drawing.addShape(group);
-                for (Shape shape : group) {
-                    drawing.removeShape(shape);
-                }
+                group.execute();
             }
         }
         if (event instanceof MouseEvent) {
@@ -37,7 +34,7 @@ public class GroupButtonHandler implements EventHandler<Event> {
             if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
                 for (Shape shape : drawing) {
                     if (shape.isOn(new Point2D(((MouseEvent) event).getX(), ((MouseEvent) event).getY()))) {
-                        group.addShape(shape);
+                        shape.Select();
                     }
                 }
             }
