@@ -1,5 +1,6 @@
 package drawing;
 
+import drawing.commands.CommandHistory;
 import drawing.handlers.DrawingMouseEventHandler;
 import drawing.shapes.Shape;
 import javafx.scene.canvas.Canvas;
@@ -15,6 +16,8 @@ import java.util.Iterator;
  */
 public class Drawing extends Canvas implements Iterable<Shape> {
 
+	private CommandHistory histoire = new CommandHistory();
+	
     DrawingMouseEventHandler handler;
     GraphicsContext gc;
 
@@ -87,5 +90,9 @@ public class Drawing extends Canvas implements Iterable<Shape> {
     @Override
     public boolean isResizable() {
         return true;
+    }
+    
+    public CommandHistory getCommandHistory(){
+    	return histoire;
     }
 }

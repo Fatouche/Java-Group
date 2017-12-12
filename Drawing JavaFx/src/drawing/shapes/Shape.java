@@ -6,8 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Created by lewandowski on 07/09/2017.
  */
-public abstract class Shape {
-
+public abstract class Shape{
     protected Point2D origin;
     protected boolean selected = false;
 
@@ -40,4 +39,6 @@ public abstract class Shape {
     }
 
     public abstract Shape clone() ;
+
+        
 }

@@ -34,4 +34,10 @@ public class UngroupCommand implements Command {
 		
 	}
 
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -1,7 +1,5 @@
 package drawing.commands;
 
-
-
 import drawing.Drawing;
 import drawing.shapes.Circle;
 import drawing.shapes.Shape;
@@ -9,7 +7,7 @@ import javafx.geometry.Point2D;
 
 public class CircleCommand extends ShapeCommand {
 
-	
+    private Circle circle;
 
     public CircleCommand(Drawing drawing, Point2D origin, Point2D destination) {
         super(drawing, origin, destination);
@@ -23,11 +21,23 @@ public class CircleCommand extends ShapeCommand {
         double centerX = (destination.getX()+origin.getX())/2;
         double centerY = (destination.getY()+origin.getY())/2;
         Point2D center = new Point2D((int)centerX, (int)centerY);
-        return new Circle(center, radius);
+        circle = new Circle(center, radius);
+        CommandHistory history;
+        history = drawing.getCommandHistory();
+        history.pushUndo(this);
+        history.clearRedos();
+        return circle;
     }
 
-	@Override
-	public void undo() {
-		
-	}
+    @Override
+    public void undo() {
+        drawing.removeShape(circle);
+        drawing.repaint();
+    }
+
+   
+    public void redo() {
+        drawing.addShape(circle);
+        drawing.repaint();
+    }
 }
