@@ -2,49 +2,73 @@ package drawing.shapes;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-public abstract class ShapeDecorator {
-	protected Point2D origin;
-	protected boolean selected = false;
-	protected String s;
 
-	public ShapeDecorator(Point2D origin, String str) {
-		this.origin = new Point2D(origin.getX(), origin.getY());
-		this.s = str;
+public class ShapeDecorator extends Shape{
+	
+	protected String str;
+	
+	protected Shape shape;
+	
+	public ShapeDecorator(Shape s, String txt) {
+		super(s.getOrigin());
+		this.shape = s;
+		this.str = txt;
 	}
 
-	public Point2D getOrigin() {
-		return origin;
+	public void paint(GraphicsContext gc){
+		//gc.fillText(str, shape.origin.getX() , shape.origin.getY());
+		shape.paint(gc);
+		gc.setFill(Color.BLACK);
+		gc.setFont(Font.font(java.awt.Font.SERIF, 15));
+		gc.fillText(str, shape.origin.getX() , shape.origin.getY());
+	} 
+	
+	public boolean isOn(Point2D p){
+		
+		if (shape.isOn(p))
+            return true;
+		
+	    return false;
 	}
-
-	public void setText(String text)
-	{
-		this.s = new String(text);
+	
+	public void setOrigin(double x, double y) {
+		this.origin = new Point2D(x, y);
+		shape.setOrigin(x, y);
 	}
 	
 	public String getString() {
-		return s;
+		return str;
 	}
 	
-	public abstract void paint(GraphicsContext gc) ;
-
-	public abstract boolean isOn(Point2D p);
-
+	public void setText(String text){
+		this.str = new String(text);
+	}
+	
+	public Shape getShape() {
+        return shape;
+    }
+	
+	public void translate(double x, double y) {
+		this.origin = this.origin.add(x,y);
+		shape.translate(x, y);
+	}
+	
+	public void setSelected(boolean selected) {
+		shape.setSelected(selected);
+	}
+	
 	public boolean isSelected() {
 		return selected;
 	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
+	
+	public Point2D getOrigin() {
+		return origin;
 	}
-
-	public void setOrigin(double x, double y) {
-		this.origin = new Point2D(x, y);
+	
+	public ShapeDecorator clone() {
+		return null;
 	}
-
-	public void translate(double x, double y) {
-		this.origin = this.origin.add(x,y);
-	}
-
-	public abstract ShapeDecorator clone() ;
 }

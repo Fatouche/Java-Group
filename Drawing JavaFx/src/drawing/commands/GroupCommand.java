@@ -9,6 +9,7 @@ import java.util.Collection;
 public class GroupCommand implements Command {
 
     private Drawing drawing;
+    private Group g;
 
     public GroupCommand(Drawing drawing) {
         this.drawing = drawing;
@@ -20,21 +21,27 @@ public class GroupCommand implements Command {
         if (liste.isEmpty())
             return;
 
-        Group g = new Group(liste);
+        g = new Group(liste);
         for (Shape s : liste)
             drawing.removeShape(s);
         drawing.addShape(g);
+        CommandHistory history;
+        history = drawing.getCommandHistory();
+        history.pushUndo(this);
+        history.clearRedos();
     }
 
-	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void undo() {
+        drawing.removeShape(g);
+        for(Shape s : g.getShapes())
+            drawing.addShape(s);
+    }
 
-	@Override
-	public void redo() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void redo() {
+        drawing.addShape(g);
+        for(Shape s : g.getShapes())
+            drawing.removeShape(s);
+    }
 }

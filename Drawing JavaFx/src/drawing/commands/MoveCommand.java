@@ -21,17 +21,21 @@ public class MoveCommand implements Command {
     public void execute() {
         shape.translate(translation.getX(), translation.getY());
         drawing.repaint();
+        CommandHistory history;
+        history = drawing.getCommandHistory();
+        history.pushUndo(this);
+        history.clearRedos();
     }
 
-	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void undo() {
+        shape.translate(-translation.getX(),-translation.getY());
+        drawing.repaint();
+    }
 
-	@Override
-	public void redo() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void redo() {
+        shape.translate(translation.getX(),translation.getY());
+        drawing.repaint();
+    }
 }

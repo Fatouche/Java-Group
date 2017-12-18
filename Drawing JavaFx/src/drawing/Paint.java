@@ -30,6 +30,7 @@ public class Paint extends Application {
     private Button deleteButton;
     private Button undoButton;
     private Button redoButton;
+    private Button text;
     
     public static void main(String[] args) {
         launch(Paint.class, args);
@@ -57,7 +58,7 @@ public class Paint extends Application {
         StatusBar status = new StatusBar(drawing);
         border.setBottom(status);
 
-        Scene scene = new Scene(border, 700, 400);
+        Scene scene = new Scene(border, 800, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -94,11 +95,15 @@ public class Paint extends Application {
         
         redoButton = new Button("Redo");
         redoButton.setOnAction(new CommandButtonHandler(new RedoCommand(drawing)));
+        
+        text = new Button("Text");
+        text.setOnAction(new CommandButtonHandler(new AddTextCommand(drawing)));
 
         hbox.getChildren().addAll(
                 clearButton, circleButton, rectangleButton,
                 groupButton, ungroupButton, cloneButton,
-                deleteButton,undoButton, redoButton);
+                deleteButton,undoButton, redoButton, text);
         return hbox;
     }
+    
 }

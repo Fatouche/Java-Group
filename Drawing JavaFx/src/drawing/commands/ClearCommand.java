@@ -44,7 +44,10 @@ public class ClearCommand implements Command {
 	@Override
 	public void redo() {
 		// TODO Auto-generated method stub
-		execute();
+		for (Shape s : drawing){
+            clearedShapes.add(s);
+        }
+        drawing.clear();
 	} 
 
 }
