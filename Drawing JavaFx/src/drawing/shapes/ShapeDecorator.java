@@ -19,7 +19,6 @@ public class ShapeDecorator extends Shape{
 	}
 
 	public void paint(GraphicsContext gc){
-		//gc.fillText(str, shape.origin.getX() , shape.origin.getY());
 		shape.paint(gc);
 		gc.setFill(Color.BLACK);
 		gc.setFont(Font.font(java.awt.Font.SERIF, 15));

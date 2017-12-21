@@ -46,9 +46,12 @@ public class Paint extends Application {
         BorderPane border = new BorderPane();
 
         VBox middleBox = new VBox();
+        HBox barreBox = new HBox();
         drawing = new Drawing();
+        
         drawing.widthProperty().bind(middleBox.widthProperty());
         drawing.heightProperty().bind(middleBox.heightProperty());
+        
         middleBox.getChildren().add(drawing);
         VBox.setVgrow(drawing, Priority.ALWAYS);
         border.setCenter(middleBox);
@@ -56,8 +59,10 @@ public class Paint extends Application {
         border.setTop(createButtonsBox());
 
         StatusBar status = new StatusBar(drawing);
-        border.setBottom(status);
-
+        barreBox.getChildren().addAll(status,StatusBarreException.getInstance());
+        
+        border.setBottom(barreBox);
+        
         Scene scene = new Scene(border, 800, 400);
         primaryStage.setScene(scene);
         primaryStage.show();

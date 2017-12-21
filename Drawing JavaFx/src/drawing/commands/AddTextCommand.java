@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import drawing.Drawing;
+import drawing.ExceptionDrawing;
+import drawing.shapes.Group;
 import drawing.shapes.Shape;
 import drawing.shapes.ShapeDecorator;
 import javafx.scene.control.TextInputDialog;
@@ -15,17 +17,25 @@ public class AddTextCommand implements Command {
 	protected Drawing drawing;
 	Shape currentShape;
 	ShapeDecorator shapeDeco;
+	Shape testShape;
 	
 	public AddTextCommand(Drawing drawing){
 		this.drawing = drawing;
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws ExceptionDrawing {
 		// TODO Auto-generated method stub
 		Iterator<Shape> it = drawing.getSelection().iterator();
+	
 		while(it.hasNext())
-			currentShape = it.next();
+			testShape = it.next();
+		
+		currentShape = testShape;
+		
+		if(currentShape instanceof Group){
+			throw new ExceptionDrawing("Impossible d'ajouter du texte sur un groupe", drawing); 
+		}
 		
 		String textepopup;
         TextInputDialog dialog = new TextInputDialog("ajout text");
@@ -49,8 +59,7 @@ public class AddTextCommand implements Command {
 		
 		// Supprime shape et add shapeDecorator
         drawing.removeShape(currentShape);
-        drawing.addShape(shapeDeco);
-		
+        drawing.addShape(shapeDeco);		
 	}
 
 	@Override

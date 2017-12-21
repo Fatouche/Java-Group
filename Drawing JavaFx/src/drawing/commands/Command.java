@@ -1,8 +1,10 @@
 package drawing.commands;
 
+import drawing.ExceptionDrawing;
+
 public interface Command {
 
-    public void execute();
+    public void execute() throws ExceptionDrawing;
     
     public void undo();
     
