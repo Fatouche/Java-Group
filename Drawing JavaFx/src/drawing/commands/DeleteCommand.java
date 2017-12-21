@@ -1,6 +1,7 @@
 package drawing.commands;
 
 import drawing.Drawing;
+import drawing.ExceptionDrawing;
 import drawing.shapes.Shape;
 
 import java.util.ArrayList;
@@ -18,8 +19,13 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExceptionDrawing {
         it = drawing.getSelection().iterator();
+        
+        if(drawing.getSelection().size()==0){
+			throw new ExceptionDrawing("Impossible de supprimer pas de figure", drawing); 
+		}
+        
         while (it.hasNext()) {
             Shape s = it.next();
             delShapes.add(s);

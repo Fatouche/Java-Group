@@ -1,6 +1,7 @@
 package drawing.commands;
 
 import drawing.Drawing;
+import drawing.ExceptionDrawing;
 import drawing.shapes.Group;
 import drawing.shapes.Shape;
 
@@ -16,8 +17,13 @@ public class UngroupCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExceptionDrawing {
         Iterator<Shape> liste = drawing.getSelection().iterator();
+        
+        if(drawing.getSelection().size()==0){
+			throw new ExceptionDrawing("Impossible de ungroup pas de figure selectionné", drawing); 
+		}
+        
         while (liste.hasNext()) {
             s = liste.next();
             if (s instanceof Group) {

@@ -1,6 +1,8 @@
 package drawing.commands;
 
 import drawing.Drawing;
+import drawing.ExceptionDrawing;
+import drawing.shapes.Group;
 import drawing.shapes.Shape;
 
 import java.util.ArrayList;
@@ -18,7 +20,11 @@ public class ClearCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExceptionDrawing {
+    	
+    	if(drawing.nbShapes()==0){
+			throw new ExceptionDrawing("Impossible de clear pas de figure", drawing); 
+		}
 
         for(Shape s : drawing){
         	clearedShapes.add(s);

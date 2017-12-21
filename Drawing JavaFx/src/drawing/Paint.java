@@ -28,8 +28,8 @@ public class Paint extends Application {
     private Button ungroupButton;
     private Button cloneButton;
     private Button deleteButton;
-    private Button undoButton;
-    private Button redoButton;
+    private ButtonObserver undoButton;
+    private ButtonObserver redoButton;
     private Button text;
     
     public static void main(String[] args) {
@@ -95,10 +95,10 @@ public class Paint extends Application {
         deleteButton = new Button("Delete");
         deleteButton.setOnAction(new CommandButtonHandler(new DeleteCommand(drawing)));
 
-        undoButton = new Button("Undo");
+        undoButton = new ButtonObserver("Undo", drawing);
         undoButton.setOnAction(new CommandButtonHandler(new UndoCommand(drawing)));
         
-        redoButton = new Button("Redo");
+        redoButton = new ButtonObserver("Redo", drawing);
         redoButton.setOnAction(new CommandButtonHandler(new RedoCommand(drawing)));
         
         text = new Button("Text");

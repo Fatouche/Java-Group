@@ -1,6 +1,7 @@
 package drawing.commands;
 
 import drawing.Drawing;
+import drawing.ExceptionDrawing;
 import drawing.shapes.Group;
 import drawing.shapes.Shape;
 
@@ -16,8 +17,13 @@ public class GroupCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ExceptionDrawing {
         Collection<Shape> liste = drawing.getSelection();
+        
+        if(drawing.getSelection().size()<1){
+			throw new ExceptionDrawing("Impossible de faire un groupe", drawing); 
+		}
+        
         if (liste.isEmpty())
             return;
 

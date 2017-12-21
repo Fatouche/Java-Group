@@ -11,8 +11,7 @@ private static StatusBarreException instance = null;
 	
 	private StatusBarreException() {
 		super();
-		System.out.println("1" + error);
-		this.setText("Erreur : " + getError());
+		this.setText(" | Erreur : " + getError());
 	}
 	
 	public static StatusBarreException getInstance() {
@@ -22,7 +21,6 @@ private static StatusBarreException instance = null;
 	}
 	
 	public void sendError(String txt) {
-		System.out.println("2" + error);
 		this.error = txt;
 		update();
 	}
@@ -33,8 +31,7 @@ private static StatusBarreException instance = null;
 
 	public void update() {
 		// TODO Auto-generated method stub
-		this.setText("Erreur : " + getError());
-		System.out.println("3" + error);
+		this.setText(" | Erreur : " + getError());
 	}
 	
 }

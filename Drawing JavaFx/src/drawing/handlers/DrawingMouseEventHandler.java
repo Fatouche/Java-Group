@@ -25,6 +25,7 @@ public class DrawingMouseEventHandler implements EventHandler<MouseEvent>, Drawi
     private Shape currentShape;
 
     private ArrayList<Shape> selectedShapes = new ArrayList<>();
+    ArrayList<DrawingObserver> observers = new ArrayList<>();
 
     public DrawingMouseEventHandler(Drawing drawing) {
         this.drawing = drawing;
@@ -64,6 +65,7 @@ public class DrawingMouseEventHandler implements EventHandler<MouseEvent>, Drawi
                 currentShape.setSelected(true);
                 selectedShapes.add(currentShape);
             }
+            notifyMouseObservers();
             drawing.repaint();
         }
 
@@ -89,13 +91,27 @@ public class DrawingMouseEventHandler implements EventHandler<MouseEvent>, Drawi
                     currentShape.translate(-globalMoveX, -globalMoveY);
                     new MoveCommand(drawing, currentShape, new Point2D(globalMoveX, globalMoveY)).execute();
                 }
-                if (!selectedShapes.contains(currentShape))
+                if (!selectedShapes.contains(currentShape)){
                     currentShape.setSelected(false);
+                }
             }
+            notifyMouseObservers();
             currentShape = null;
             drawing.repaint();
-
         }
+    }
+    
+    public void addMouseObserver(DrawingObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeMouseObserver(DrawingObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyMouseObservers() {
+        for (DrawingObserver observer: observers)
+            observer.update();
     }
 
     @Override
